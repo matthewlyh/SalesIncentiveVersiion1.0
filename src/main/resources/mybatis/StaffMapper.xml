@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ The MIT License (MIT)
+  ~
+  ~ Copyright (c) 2014-2016 abel533@gmail.com
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~ of this software and associated documentation files (the "Software"), to deal
+  ~ in the Software without restriction, including without limitation the rights
+  ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~ copies of the Software, and to permit persons to whom the Software is
+  ~ furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in
+  ~ all copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+  ~ THE SOFTWARE.
+  -->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinaTele.SalesIncentive.SalesIncentive.dao.StaffMapper">
+
+    <resultMap id="StaffMapper" type="com.chinaTele.SalesIncentive.SalesIncentive.model.StaffModel">
+        <result property="staff_id" column="STAFF_ID"/>
+        <result property="staff_code" column="STAFF_CODE"/>
+        <result property="staff_name" column="STAFF_NAME"/>
+        <result property="pass_word" column="PASS_WORD"/>
+        <result property="channel_id" column="CHANNEL_ID"/>
+        <result property="sex" column="SEX"/>
+        <result property="age" column="AGE"/>
+        <result property="lan_id" column="LAN_ID"/>
+        <result property="phone_nbr" column="PHONE_NBR"/>
+        <result property="staff_type" column="STAFF_TYPE"/>
+        <result property="attr_value_1" column="ATTR_VALUE_1"/>
+        <result property="attr_value_2" column="ATTR_VALUE_2"/>
+        <result property="attr_value_3" column="ATTR_VALUE_3"/>
+    </resultMap>
+
+
+    <sql id="all_fields">
+        STAFF_CODE, STAFF_NAME, PASS_WORD,CHANNEL_ID,SEX, AGE, LAN_ID, PHONE_NBR, STAFF_TYPE, ATTR_VALUE_1, ATTR_VALUE_2, ATTR_VALUE_3
+    </sql>
+
+    <select id="queryList" parameterType="com.chinaTele.SalesIncentive.SalesIncentive.query.StaffQuery" resultMap="StaffMapper">
+        SELECT STAFF_ID,
+        <include refid="all_fields"/>
+        FROM staff
+        where 1=1
+        <if test="staff_name != null">AND STAFF_NAME like CONCAT('%',#{staff_name}, '%')</if>
+        <if test="staff_code != null">AND STAFF_CODE = #{staff_code}</if>
+        <if test="lan_id != 0">AND LAN_ID = #{lan_id}</if>
+        <if test="staff_type != 0">AND STAFF_TYPE = #{staff_type}</if>
+    </select>
+
+    <select id="findStaffById" parameterType="java.util.Map" resultMap="StaffMapper">
+        SELECT STAFF_ID,
+        <include refid="all_fields"/>
+        FROM staff
+        where STAFF_ID=#{staff_id}
+    </select>
+
+    <select id="findStaffByCode" parameterType="java.util.Map" resultMap="StaffMapper">
+        SELECT STAFF_ID,
+        <include refid="all_fields"/>
+        FROM staff
+        where STAFF_CODE=#{staff_code}
+    </select>
+
+
+    <select id="countList" resultType="Integer"
+            parameterType="com.chinaTele.SalesIncentive.SalesIncentive.query.StaffQuery">
+        select count(1)
+        from staff
+        where 1=1
+        <if test="staff_name != null">AND STAFF_NAME like CONCAT('%',#{staff_name}, '%')</if>
+        <if test="staff_code != null">AND STAFF_CODE = #{staff_code}</if>
+        <if test="lan_id != null">AND LAN_ID = #{lan_id}</if>
+        <if test="staff_type != null">AND STAFF_TYPE = #{staff_type}</if>
+    </select>
+
+
+
+    <update id="updateStaff" parameterType="com.chinaTele.SalesIncentive.SalesIncentive.query.StaffQuery">
+        UPDATE staff
+        SET PASS_WORD = #{pass_word}
+        WHERE STAFF_ID = #{staff_id}
+    </update>
+
+
+</mapper>
