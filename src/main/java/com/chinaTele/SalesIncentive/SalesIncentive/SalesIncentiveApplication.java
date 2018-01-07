@@ -1,11 +1,8 @@
 package com.chinaTele.SalesIncentive.SalesIncentive;
 
-import com.chinaTele.SalesIncentive.SalesIncentive.model.ProdOfferModel;
-import com.chinaTele.SalesIncentive.SalesIncentive.service.ProdOfferService;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -47,7 +44,7 @@ public class SalesIncentiveApplication {
 	}
 
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		SpringApplication.run(SalesIncentiveApplication.class, args);
 	}
 }

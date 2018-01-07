@@ -13,18 +13,18 @@ import org.springframework.stereotype.Component;
 public class CustOrderServiceImpl implements CustOrderService {
 
     @Autowired
-    private CustOrderMapper custrdermapper;
+    private CustOrderMapper custOrderMapper;
 
     public CustOrderModel FindCustOrderByID(int cust_order_id)
     {
         //System.out.println("cust_order_id："+cust_order_id);
-        return custrdermapper.findCustById(cust_order_id);
+        return custOrderMapper.findCustById(cust_order_id);
     }
 
     public boolean FindCustOrderId(int id)
     {
         boolean T=false;
-        CustOrderModel custOrderModel=custrdermapper.findCustById(id);
+        CustOrderModel custOrderModel=custOrderMapper.findCustById(id);
         if (custOrderModel!=null)
             if (custOrderModel.getStatus_cd() == 1)
                 T= true;
@@ -32,7 +32,7 @@ public class CustOrderServiceImpl implements CustOrderService {
     }
     public void updateCustOrder(int id)
     {
-        custrdermapper.updateCustOrder(id);
+    	custOrderMapper.updateCustOrder(id);
     }
 
 }

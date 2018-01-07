@@ -8,6 +8,15 @@ public class InterViewQuery extends BaseQuery{
     private String staff_name;
     private String channel_name;
     private float gold;
+    private int Sank;
+
+    public int getSank() {
+        return Sank;
+    }
+
+    public void setSank(int sank) {
+        Sank = sank;
+    }
 
     public int getStaff_id() {
         return staff_id;

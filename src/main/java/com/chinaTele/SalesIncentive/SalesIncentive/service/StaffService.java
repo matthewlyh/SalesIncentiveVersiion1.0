@@ -12,4 +12,5 @@ public interface StaffService {
     StaffModel findStaffById(int id);
     public PagedData<StaffModel> query(StaffQuery query);
     boolean UpdatePassWord(int ID,String OldPWD,String NewPWD);
+    int updateByPrimaryKey(StaffModel record);
 }

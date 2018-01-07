@@ -18,20 +18,33 @@ public class StaffServiceImpl implements StaffService {
 
     @Autowired
     private StaffMapper staffmapper;
+    
+    public int updateByPrimaryKey(StaffModel record)
+    {
+    	return staffmapper.updateByPrimaryKey(record);
+    }
 
     public StaffModel findStaffByIdAndPass(String staff_code, String pass_word) {
         System.out.println("进入Service :findStaffByIdAndPass");
-
+        
         //String staff_code,String pass_word
         StaffModel staffModel=staffmapper.findStaffByCode(staff_code);
+        System.out.println("比对密码，原密码："+staffModel.getPass_word());
+        System.out.println("现密码："+pass_word);
         if (!staffModel.getPass_word().equals(pass_word))
+        {
             staffModel =null;
+        	System.out.println("密码不匹配");
+        }
+        else 
+        	System.out.println("密码匹配成功");
+		
         return staffModel;
     }
 
     public StaffModel findStaffById(int id) {
         StaffModel Staff = staffmapper.findStaffById(id);
-        System.out.println("name:" + Staff.getStaff_name());
+        //System.out.println("name:" + Staff.getStaff_name());
         return Staff;
     }
 

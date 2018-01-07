@@ -1,4 +1,5 @@
 package com.chinaTele.SalesIncentive.SalesIncentive.dao;
+
 import com.chinaTele.SalesIncentive.SalesIncentive.model.StaffModel;
 
 import org.apache.ibatis.annotations.Param;
@@ -14,5 +15,6 @@ public interface StaffMapper {
     public List<StaffModel> queryList(StaffQuery StaffQuery);
     int countList(StaffQuery query);
     Boolean updateStaff(StaffQuery query);
+    int updateByPrimaryKey(StaffModel record);
 
 }

@@ -1,8 +1,8 @@
 package com.chinaTele.SalesIncentive.SalesIncentive.service.impl;
 
-import com.chinaTele.SalesIncentive.SalesIncentive.dao.ChannelMapper;
-import com.chinaTele.SalesIncentive.SalesIncentive.model.ChannelModel;
-import com.chinaTele.SalesIncentive.SalesIncentive.service.ChannelService;
+import com.chinaTele.SalesIncentive.SalesIncentive.model.*;
+import com.chinaTele.SalesIncentive.SalesIncentive.service.*;
+import com.chinaTele.SalesIncentive.SalesIncentive.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

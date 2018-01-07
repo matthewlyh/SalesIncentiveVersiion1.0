@@ -9,7 +9,11 @@ import com.chinaTele.SalesIncentive.SalesIncentive.query.CustOrderViewQuery;
 import com.chinaTele.SalesIncentive.SalesIncentive.query.PagedData;
 import com.chinaTele.SalesIncentive.SalesIncentive.service.CustOrderService;
 import com.chinaTele.SalesIncentive.SalesIncentive.service.CustOrderViewService;
+import com.chinaTele.SalesIncentive.SalesIncentive.service.OfferProdRelService;
 import com.chinaTele.SalesIncentive.SalesIncentive.service.ProdOfferService;
+import com.chinaTele.SalesIncentive.SalesIncentive.service.ProductService;
+import com.chinaTele.SalesIncentive.SalesIncentive.service.StaffService;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,7 +36,14 @@ public class CustCoderController {
 
     @Autowired
     private CustOrderViewService custOrderViewService;
-
+    
+    @Autowired
+    private ProductService productService;
+    
+    @Autowired
+    private StaffService staffService;
+    @Autowired
+    private OfferProdRelService offerProdRelService;
     //根据id获取到当前销售品信息
     @RequestMapping("/FindCustId")
     @ResponseBody
@@ -54,8 +65,11 @@ public class CustCoderController {
 
         CustOrderQuery custOrderQuery=new CustOrderQuery();
         custOrderQuery.setCust_order_id(custOrderModel.getCust_order_id());
+        custOrderQuery.setStaff_name(staffService.findStaffById(custOrderModel.getStaff_id()).getStaff_name());
+        custOrderQuery.setProduct_name(productService.selectByPrimaryKey(offerProdRelService.selectByPrimaryKey(custOrderModel.getProd_offer_id()).getProductId()).getProductName());
         custOrderQuery.setCust_order_date(custOrderModel.getCust_order_date());
         custOrderQuery.setProd_offer_id(custOrderModel.getProd_offer_id());
+        custOrderQuery.setProd_offer_name(prodOfferModel.getProd_offer_name());
         custOrderQuery.setOffer_type(prodOfferModel.getOffer_type());
         custOrderQuery.setGold(prodOfferModel.getGold());
         custOrderQuery.setBool(T);

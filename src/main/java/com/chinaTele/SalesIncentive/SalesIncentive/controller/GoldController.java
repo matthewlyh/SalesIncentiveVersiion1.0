@@ -40,22 +40,27 @@ public class GoldController {
     @ResponseBody
     @CrossOrigin
     public BooleanT FindCustViewId(HttpServletRequest request) {
+    	BooleanT T=new BooleanT();
+    	boolean bool=false;
         System.out.println("启动程序CustCoderController：FindCustViewId");
         Object Cust_Order_ID = request.getParameter("id");
         CustOrderModel custOrderModel=custOrderService.FindCustOrderByID(Integer.valueOf(Cust_Order_ID.toString()));
         ProdOfferModel prodOfferModel=prodOfferService.FindProdOfferById(custOrderModel.getProd_offer_id());
-
-        GoldModel gm=new GoldModel();
-        gm.setCust_order_id(custOrderModel.getCust_order_id());
-        gm.setChannel_id(custOrderModel.getChannel_id());
-        gm.setGold(prodOfferModel.getGold());
-        gm.setLan_id(custOrderModel.getLan_id());
-        gm.setStaff_id(custOrderModel.getStaff_id());
-        gm.setProd_offer_id(gm.getProd_offer_id());
-        BooleanT T=new BooleanT();
-        boolean bool=goldService.insertGold(gm);
-        if(bool)
-            custOrderService.updateCustOrder(gm.getCust_order_id());
+        int status_cd=custOrderModel.getStatus_cd();
+        if (status_cd==1)
+        {
+	        GoldModel gm=new GoldModel();
+	        gm.setCust_order_id(custOrderModel.getCust_order_id());
+	        gm.setChannel_id(custOrderModel.getChannel_id());
+	        gm.setGold(prodOfferModel.getGold());
+	        gm.setLan_id(custOrderModel.getLan_id());
+	        gm.setStaff_id(custOrderModel.getStaff_id());
+	        gm.setProd_offer_id(gm.getProd_offer_id());
+	       
+            bool=goldService.insertGold(gm);
+	        if(bool)
+	            custOrderService.updateCustOrder(gm.getCust_order_id());
+        }
         T.setBool(bool);
         return(T);
     }

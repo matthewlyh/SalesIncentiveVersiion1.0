@@ -45,6 +45,16 @@
         where STAFF_ID=#{staff_id}
     </select>
 
+    <select id="queryList" parameterType="com.chinaTele.SalesIncentive.SalesIncentive.query.InterViewQuery" resultMap="InterViewMapper">
+        SELECT *
+        FROM InterView
+    </select>
+
+    <select id="countList" resultType="Integer"
+            parameterType="com.chinaTele.SalesIncentive.SalesIncentive.query.InterViewQuery">
+        select count(1)
+        from InterView
+    </select>
 
 
 </mapper>

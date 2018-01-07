@@ -1,5 +1,5 @@
 package com.chinaTele.SalesIncentive.SalesIncentive.controller;
-import com.chinaTele.SalesIncentive.SalesIncentive.dao.InterViewMapper;
+
 import com.chinaTele.SalesIncentive.SalesIncentive.model.*;
 import com.chinaTele.SalesIncentive.SalesIncentive.query.*;
 import com.chinaTele.SalesIncentive.SalesIncentive.service.ChannelService;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import sun.rmi.transport.Channel;
+import sun.security.krb5.JavaxSecurityAuthKerberosAccess;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -120,6 +121,39 @@ public class StaffController {
         }
         return T;
     }
+    
+    //修改Staff，{"bool":null,"boolI":2}反馈类型，BoolI，1代表用户修改成功，2代表修改失败，4代表用户不存在
+    @RequestMapping("/UpdateStaff")
+    @ResponseBody
+    @CrossOrigin
+    public BooleanT UpdateStaff(HttpServletRequest request) {
+        System.out.println("StaffController：UpdateStaff");
+        Object id= request.getParameter("id");
+        Object phonenbr = request.getParameter("phonenbr");
+        Object sex = request.getParameter("sex");
+
+        BooleanT T=new BooleanT();
+        StaffModel Staff=new StaffModel();
+        
+        if (id == null)
+            T.setBoolI(4);
+        else {
+        	Staff=staffservice.findStaffById(Integer.valueOf(id.toString()));
+        	
+        	if (Staff == null)
+        		T.setBoolI(4);
+        	else
+        	{
+	        	if (sex !=null)
+	        		Staff.setSex(Integer.valueOf(sex.toString()));
+	        	if (phonenbr !=null)
+	        		Staff.setPhone_nbr(phonenbr.toString());
+	        	int reInt=staffservice.updateByPrimaryKey(Staff);
+	        	T.setBoolI(reInt);
+        	}
+        }
+        return T;
+    }
 
     //通过Staff_name
     @RequestMapping("/StaffList")
@@ -147,7 +181,13 @@ public class StaffController {
     }
 
 
-    //通过Staff_name
+    /*通过Staff_name
+    根据当前用户的ID，反馈下列信息：
+    1、Staff_id
+    2、Staff_name
+    3、Channel_name
+    4、视图InterView的Gold结果
+    */
     @RequestMapping("/StaffGold")
     @ResponseBody
     @CrossOrigin
@@ -162,8 +202,16 @@ public class StaffController {
         query.setStaff_name(person.getStaff_name());
         query.setChannel_name(cm.getChannel_name());
         query.setGold(im.getGold());
+        //得到他的排名
+        InterViewQuery interViewQuery=new InterViewQuery();
+        int Sank=-1;
+        PagedData<InterViewModel> interViewModelPagedData=interViewService.query(interViewQuery);
+        System.out.println("interViewModelPagedDataNum："+interViewModelPagedData.getTotalNum());
+        for(int i=0;i<interViewModelPagedData.getTotalNum();i++)
+            if (interViewModelPagedData.getList().get(i).getStaff_id()==Integer.valueOf(id))
+                Sank=i+1;
+        query.setSank(Sank);
          return query;
-
     }
 
 

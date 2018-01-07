@@ -49,4 +49,5 @@ public class StaffRankModel {
     public void setGold(float gold) {
         Gold = gold;
     }
+
 }

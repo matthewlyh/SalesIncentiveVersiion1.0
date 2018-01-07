@@ -36,7 +36,19 @@ public class StaffRankController {
             staffRankQuery.setChannel_id(staffService.findStaffById(Integer.valueOf(Sid)).getChannel_id());
             staffRankQuery.setChannel_id(staffService.findStaffById(Integer.valueOf(Sid)).getChannel_id());
             PagedData<StaffRankModel> PageS=staffRankService.query(staffRankQuery);
+            if (PageS.getTotalNum()!=0) {
+                StaffRankModel staffRankModel=new StaffRankModel();
+                for (int i = 0; i < PageS.getTotalNum(); i++) {
+                    for (int j=i+1;j<PageS.getTotalNum();j++)
+                        if (PageS.getList().get(i).getGold()<PageS.getList().get(j).getGold()) {
+                            staffRankModel = PageS.getList().get(i);
+                            PageS.getList().set(i,PageS.getList().get(j));
+                            PageS.getList().set(j,staffRankModel);
+                        }
+                }
+            }
             return PageS;
+
         }
         else
             return null;

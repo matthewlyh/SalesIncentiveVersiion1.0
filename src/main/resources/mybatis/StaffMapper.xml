@@ -58,6 +58,18 @@
         <if test="staff_type != 0">AND STAFF_TYPE = #{staff_type}</if>
     </select>
 
+    <select id="countList" resultType="Integer"
+            parameterType="com.chinaTele.SalesIncentive.SalesIncentive.query.StaffQuery">
+        select count(1)
+        from staff
+        where 1=1
+        <if test="staff_name != null">AND STAFF_NAME like CONCAT('%',#{staff_name}, '%')</if>
+        <if test="staff_code != null">AND STAFF_CODE = #{staff_code}</if>
+        <if test="lan_id != null">AND LAN_ID = #{lan_id}</if>
+        <if test="staff_type != null">AND STAFF_TYPE = #{staff_type}</if>
+    </select>
+
+
     <select id="findStaffById" parameterType="java.util.Map" resultMap="StaffMapper">
         SELECT STAFF_ID,
         <include refid="all_fields"/>
@@ -73,16 +85,6 @@
     </select>
 
 
-    <select id="countList" resultType="Integer"
-            parameterType="com.chinaTele.SalesIncentive.SalesIncentive.query.StaffQuery">
-        select count(1)
-        from staff
-        where 1=1
-        <if test="staff_name != null">AND STAFF_NAME like CONCAT('%',#{staff_name}, '%')</if>
-        <if test="staff_code != null">AND STAFF_CODE = #{staff_code}</if>
-        <if test="lan_id != null">AND LAN_ID = #{lan_id}</if>
-        <if test="staff_type != null">AND STAFF_TYPE = #{staff_type}</if>
-    </select>
 
 
 
@@ -91,6 +93,20 @@
         SET PASS_WORD = #{pass_word}
         WHERE STAFF_ID = #{staff_id}
     </update>
-
+	<update id="updateByPrimaryKey" parameterType="com.chinaTele.SalesIncentive.SalesIncentive.model.StaffModel" >
+    update staff
+    set staff_code = #{staff_code,jdbcType=VARCHAR},
+      staff_name = #{staff_name,jdbcType=VARCHAR},
+      channel_id = #{channel_id,jdbcType=INTEGER},
+      sex = #{sex,jdbcType=INTEGER},
+      age = #{age,jdbcType=INTEGER},
+      lan_id = #{lan_id,jdbcType=INTEGER},
+      phone_nbr = #{phone_nbr,jdbcType=VARCHAR},
+      staff_type = #{staff_type,jdbcType=INTEGER},
+      attr_value_1 = #{attr_value_1,jdbcType=VARCHAR},
+      attr_value_2 = #{attr_value_2,jdbcType=VARCHAR},
+      attr_value_3 = #{attr_value_3,jdbcType=VARCHAR}
+    where staff_id = #{staff_id,jdbcType=INTEGER} 
+  </update>
 
 </mapper>

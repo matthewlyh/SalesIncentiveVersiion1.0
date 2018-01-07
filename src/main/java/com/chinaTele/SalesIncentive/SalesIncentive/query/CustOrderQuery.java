@@ -10,12 +10,41 @@ import com.chinaTele.SalesIncentive.SalesIncentive.model.ProdOfferModel;
 public class CustOrderQuery {
     private int cust_order_id;
     private int  prod_offer_id;
+    private String prod_offer_name;
     private String  cust_order_date;
-    private int offer_type;
+    private String product_name;
+    private String staff_name;
+    
+
+	public String getStaff_name() {
+		return staff_name;
+	}
+
+	public void setStaff_name(String staff_name) {
+		this.staff_name = staff_name;
+	}
+
+	public String getProduct_name() {
+		return product_name;
+	}
+
+	public void setProduct_name(String product_name) {
+		this.product_name = product_name;
+	}
+
+	private int offer_type;
     private float gold;
     private boolean bool;
 
-    public boolean isBool() {
+    public String getProd_offer_name() {
+		return prod_offer_name;
+	}
+
+	public void setProd_offer_name(String prod_offer_name) {
+		this.prod_offer_name = prod_offer_name;
+	}
+
+	public boolean isBool() {
         return bool;
     }
 
